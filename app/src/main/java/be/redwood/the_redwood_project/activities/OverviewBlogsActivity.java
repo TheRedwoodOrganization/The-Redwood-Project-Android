@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.parse.ParseObject;
+
 import be.redwood.the_redwood_project.R;
 
 public class OverviewBlogsActivity extends AppCompatActivity {
@@ -13,6 +15,10 @@ public class OverviewBlogsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview_blogs);
+
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
     }
 
     @Override
