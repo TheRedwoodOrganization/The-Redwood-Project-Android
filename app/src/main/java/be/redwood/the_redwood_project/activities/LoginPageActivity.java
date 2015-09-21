@@ -11,6 +11,8 @@ public class LoginPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+
+        DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
     }
 
 }

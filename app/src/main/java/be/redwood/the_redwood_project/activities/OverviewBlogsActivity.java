@@ -16,6 +16,8 @@ public class OverviewBlogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview_blogs);
 
+        DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
+
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();

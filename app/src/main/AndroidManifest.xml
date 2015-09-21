@@ -27,7 +27,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activities.OverviewBlogsActivity"
+            android:name=".activities.LoginPageActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,11 +36,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.LoginPageActivity"
+            android:name=".activities.RegistrationPageActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".activities.RegistrationPageActivity"
+            android:name=".activities.OverviewBlogsActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

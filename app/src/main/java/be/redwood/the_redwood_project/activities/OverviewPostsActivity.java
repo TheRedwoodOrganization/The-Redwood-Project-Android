@@ -11,6 +11,8 @@ public class OverviewPostsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview_posts);
+
+        DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
     }
 
 }
