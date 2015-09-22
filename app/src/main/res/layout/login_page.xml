@@ -30,6 +30,7 @@
             android:text="Username:" />
 
         <EditText
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -52,21 +53,33 @@
             android:text="Password:" />
 
         <EditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:hint="give in your password"
+            android:inputType="textPassword"
             android:textSize="12dp"/>
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
         android:text="Login"/>
+
+    <TextView
+        android:id="@+id/fault_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:text="@string/fault_message_login"
+        android:layout_marginLeft="30dp"
+        android:visibility="invisible" />
 
 </LinearLayout>
 

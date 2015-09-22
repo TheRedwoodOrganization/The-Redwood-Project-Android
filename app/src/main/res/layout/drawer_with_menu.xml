@@ -9,4 +9,22 @@
         android:layout_height="60dp"
         android:text="Overview Blogs"/>
 
+    <Button
+        android:id="@+id/create_blog"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="Create blog (temporary link)"/>
+
+    <Button
+        android:id="@+id/create_post"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="Create post (temporary link)"/>
+
+    <Button
+        android:id="@+id/create_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="Create comment (temporary link)"/>
+
 </LinearLayout>

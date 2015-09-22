@@ -18,9 +18,6 @@ public class OverviewBlogsActivity extends AppCompatActivity {
 
         DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
 
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
     }
 
     @Override
