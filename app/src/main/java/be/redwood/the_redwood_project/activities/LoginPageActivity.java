@@ -51,22 +51,6 @@ public class LoginPageActivity extends AppCompatActivity implements View.OnClick
         password = p.getText().toString();
         final View view = v;
 
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-//        query.whereEqualTo("username", username);
-//        query.whereEqualTo("password", password);
-//        query.getFirstInBackground(new GetCallback<ParseObject>() {
-//            @Override
-//            public void done(ParseObject user, com.parse.ParseException e) {
-//                if (e == null) {
-//                    dlgAlert.setMessage("You're now logged in");
-//                    dlgAlert.show();
-//                    faultMessage.setVisibility(View.INVISIBLE);
-//                } else {
-//                    faultMessage.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             public void done(ParseUser user, com.parse.ParseException e) {
                 if (user != null) {

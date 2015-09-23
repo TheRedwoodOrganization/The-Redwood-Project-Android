@@ -3,7 +3,7 @@ package be.redwood.the_redwood_project.models;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-public class User extends ParseUser {
+public class User {
     private String email;
     private String username;
     private String password;
