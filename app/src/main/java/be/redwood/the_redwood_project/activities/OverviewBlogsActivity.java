@@ -43,6 +43,7 @@ public class OverviewBlogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview_blogs);
         DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
+        getSupportActionBar().setTitle("The Redwood Project");
 
         recList = (RecyclerView) findViewById(R.id.blogList);
         recList.setHasFixedSize(true);

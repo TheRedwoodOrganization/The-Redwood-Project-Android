@@ -37,6 +37,7 @@ public class OverviewPostsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview_posts);
         DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
+        getSupportActionBar().setTitle("The Redwood Project");
 
         recList = (RecyclerView) findViewById(R.id.postList);
         recList.setHasFixedSize(true);

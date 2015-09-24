@@ -35,7 +35,7 @@ public class LoginPageActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
         DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
-
+        getSupportActionBar().setTitle("The Redwood Project");
 
         login = (Button) this.findViewById(R.id.login);
         login.setOnClickListener(this);
