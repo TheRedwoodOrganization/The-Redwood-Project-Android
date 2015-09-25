@@ -1,9 +1,13 @@
 package be.redwood.the_redwood_project.activities;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +39,10 @@ public class LoginPageActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
         DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
-        getSupportActionBar().setTitle("The Redwood Project");
+
+        Toolbar toolbar = (Toolbar) this.findViewById (R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+
 
         login = (Button) this.findViewById(R.id.login);
         login.setOnClickListener(this);
