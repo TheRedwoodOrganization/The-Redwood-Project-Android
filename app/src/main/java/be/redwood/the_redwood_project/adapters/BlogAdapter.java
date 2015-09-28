@@ -1,8 +1,13 @@
-package be.redwood.the_redwood_project.activities;
+package be.redwood.the_redwood_project.adapters;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import be.redwood.the_redwood_project.R;
+import be.redwood.the_redwood_project.fragments.OverviewPostsFragment;
 import be.redwood.the_redwood_project.models.Blog;
 
 public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ContactViewHolder> {
@@ -66,10 +72,24 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ContactViewHol
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, OverviewPostsActivity.class);
-            Blog blog = blogList.get(this.getLayoutPosition());
-            intent.putExtra("blog_title", blog.getTitle());
-            context.startActivity(intent);
+            try{
+                Fragment fragment = new OverviewPostsFragment();
+                Bundle arguments = new Bundle();
+                Blog blog = blogList.get(this.getLayoutPosition());
+                arguments.putString("blog_title", blog.getTitle());
+                fragment.setArguments(arguments);
+
+                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.place_for_the_real_page, fragment);
+                fragmentTransaction.commit();
+            } catch (ClassCastException e) {
+                Log.d("my_activity", "Can't get the fragment manager");
+            }
+//            Intent intent = new Intent(context, MainActivity.class);
+//            Blog blog = blogList.get(this.getLayoutPosition());
+//            intent.putExtra("blog_title", blog.getTitle());
+//            context.startActivity(intent);
         }
     }
 }

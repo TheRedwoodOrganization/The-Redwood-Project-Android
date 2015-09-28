@@ -1,9 +1,12 @@
-package be.redwood.the_redwood_project.activities;
+package be.redwood.the_redwood_project.fragments;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,10 +21,10 @@ import java.util.Date;
 import java.util.List;
 
 import be.redwood.the_redwood_project.R;
-import be.redwood.the_redwood_project.models.Blog;
+import be.redwood.the_redwood_project.adapters.PostAdapter;
 import be.redwood.the_redwood_project.models.Post;
 
-public class OverviewPostsActivity extends AppCompatActivity {
+public class OverviewPostsFragment extends Fragment {
     public static final String BASE_URL = "http://172.30.68.16:3000";
     private static final String TAG = "MyActivity";
     private List<Post> postList;
@@ -33,30 +36,31 @@ public class OverviewPostsActivity extends AppCompatActivity {
     LinearLayoutManager llm;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.overview_posts);
-        DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
-        getSupportActionBar().setTitle("The Redwood Project");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.overview_posts, container, false);
 
-        recList = (RecyclerView) findViewById(R.id.postList);
+        recList = (RecyclerView) v.findViewById(R.id.postList);
         recList.setHasFixedSize(true);
-        llm = new LinearLayoutManager(this);
+        llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            blogTitle = extras.getString("blog_title");
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            blogTitle = arguments.getString("blog_title");
         }
-        showBlogInformationOnScreen();
+        showBlogInformationOnScreen(v);
 
         postList = new ArrayList<>();
         fillPostListAndSetPostAdapter();
+
+        return v;
     }
 
-    public void showBlogInformationOnScreen() {
-        title = (TextView) findViewById(R.id.title);
+    public void showBlogInformationOnScreen(View v) {
+        final View x = v;
+        title = (TextView) x.findViewById(R.id.title);
         title.setText(blogTitle);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Blog");
@@ -69,10 +73,10 @@ public class OverviewPostsActivity extends AppCompatActivity {
                     ParseObject user = (ParseObject) blog.get("user");
                     String userName = user.getString("username");
 
-                    author = (TextView) findViewById(R.id.author);
+                    author = (TextView) x.findViewById(R.id.author);
                     author.setText("by: " + userName);
-                    blogImage = (ImageView) findViewById(R.id.image_post);
-                    Picasso.with(OverviewPostsActivity.this).load(image).into(blogImage);
+                    blogImage = (ImageView) x.findViewById(R.id.image_post);
+                    Picasso.with(getActivity()).load(image).into(blogImage);
                 }
             }
         });
@@ -106,7 +110,7 @@ public class OverviewPostsActivity extends AppCompatActivity {
 
                     }
                 }
-                PostAdapter pa = new PostAdapter(postList, OverviewPostsActivity.this);
+                PostAdapter pa = new PostAdapter(postList, getContext());
                 recList.setAdapter(pa);
                 recList.setLayoutManager(llm);
             }

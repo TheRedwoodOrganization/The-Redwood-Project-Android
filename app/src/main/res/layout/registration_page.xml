@@ -1,17 +1,7 @@
-<!-- The DrawerLayout consists of two views: the layout for the main content view and the navigation drawer -->
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
-    <!-- The main content view -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin" >
 
         <TextView
             android:layout_width="match_parent"
@@ -114,21 +104,3 @@
             android:text="Register"/>
 
     </LinearLayout>
-
-
-    <!-- The navigation drawer view-->
-    <LinearLayout
-        android:layout_gravity="start"
-        android:layout_width="260dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:name="be.redwood.the_redwood_project.activities.DrawerFragmentFactory"
-            android:id="@+id/drawer_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-</android.support.v4.widget.DrawerLayout>

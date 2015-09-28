@@ -1,17 +1,18 @@
-package be.redwood.the_redwood_project.activities;
+package be.redwood.the_redwood_project.fragments;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,10 +20,10 @@ import java.util.Date;
 import java.util.List;
 
 import be.redwood.the_redwood_project.R;
-import be.redwood.the_redwood_project.models.Blog;
+import be.redwood.the_redwood_project.adapters.CommentAdapter;
 import be.redwood.the_redwood_project.models.Comment;
 
-public class OverviewCommentsActivity extends AppCompatActivity {
+public class OverviewCommentsFragment extends Fragment {
     public static final String BASE_URL = "http://172.30.68.16:3000";
     private static final String TAG = "MyActivity";
     private List<Comment> commentList;
@@ -34,30 +35,33 @@ public class OverviewCommentsActivity extends AppCompatActivity {
     LinearLayoutManager llm;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.overview_comments);
-        DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
-        getSupportActionBar().setTitle("The Redwood Project");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.overview_comments, container, false);
 
-        recList = (RecyclerView) findViewById(R.id.commentList);
+        recList = (RecyclerView) v.findViewById(R.id.commentList);
         recList.setHasFixedSize(true);
-        llm = new LinearLayoutManager(this);
+        llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            postTitle = extras.getString("post_title");
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            postTitle = arguments.getString("post_title");
         }
-        showPostInformationOnScreen();
+        showPostInformationOnScreen(v);
 
         commentList = new ArrayList<>();
         fillCommentListAndSetCommentAdapter();
+
+        return v;
+
     }
 
-    public void showPostInformationOnScreen() {
-        title = (TextView) findViewById(R.id.title);
+
+    public void showPostInformationOnScreen(View v) {
+        final View x = v;
+        title = (TextView) x.findViewById(R.id.title);
         title.setText(postTitle);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("BlogPost");
@@ -75,9 +79,9 @@ public class OverviewCommentsActivity extends AppCompatActivity {
                     ParseObject user = (ParseObject) post.get("user");
                     String userName = user.getString("username");
 
-                    authorAndDate = (TextView) findViewById(R.id.author_and_date);
+                    authorAndDate = (TextView) x.findViewById(R.id.author_and_date);
                     authorAndDate.setText("Posted by " + userName + " on " + date);
-                    postBody = (TextView) findViewById(R.id.body_of_the_post);
+                    postBody = (TextView) x.findViewById(R.id.body_of_the_post);
                     postBody.setText(body);
                 }
             }
@@ -110,7 +114,7 @@ public class OverviewCommentsActivity extends AppCompatActivity {
                         }
                     }
                 }
-                CommentAdapter ca = new CommentAdapter(commentList, OverviewCommentsActivity.this);
+                CommentAdapter ca = new CommentAdapter(commentList, getContext());
                 recList.setAdapter(ca);
                 recList.setLayoutManager(llm);
             }

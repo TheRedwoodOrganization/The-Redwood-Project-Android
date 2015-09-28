@@ -1,62 +1,55 @@
-package be.redwood.the_redwood_project.activities;
+package be.redwood.the_redwood_project.fragments;
 
-import android.app.ActionBar;
-import android.app.AlertDialog;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.LogInCallback;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.text.ParseException;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import be.redwood.the_redwood_project.R;
-import be.redwood.the_redwood_project.models.User;
 
-public class LoginPageActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginPageFragment extends Fragment implements View.OnClickListener {
     TextView faultMessage;
     String username;
     String password;
     Button login;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_page);
-        DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.login_page, container, false);
 
-        Toolbar toolbar = (Toolbar) this.findViewById (R.id.my_toolbar);
-        setSupportActionBar(toolbar);
-
-
-        login = (Button) this.findViewById(R.id.login);
+        faultMessage = (TextView) v.findViewById(R.id.fault_message);
+        login = (Button) v.findViewById(R.id.login);
         login.setOnClickListener(this);
-        faultMessage = (TextView) this.findViewById(R.id.fault_message);
 
+        return v;
+
+    }
+
+    public static LoginPageFragment newInstance(int page, String title) {
+        LoginPageFragment fragment = new LoginPageFragment();
+        return fragment;
     }
 
     @Override
     public void onClick(View v) {
-        EditText u = (EditText) this.findViewById(R.id.username);
+        View x = getView();
+        EditText u = (EditText) x.findViewById(R.id.username);
         username = u.getText().toString();
-        EditText p = (EditText) this.findViewById(R.id.password);
+        EditText p = (EditText) x.findViewById(R.id.password);
         password = p.getText().toString();
-        final View view = v;
+        final View view = x;
 
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             public void done(ParseUser user, com.parse.ParseException e) {

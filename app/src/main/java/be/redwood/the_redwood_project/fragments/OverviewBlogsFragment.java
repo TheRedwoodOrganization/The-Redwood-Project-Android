@@ -1,37 +1,25 @@
-package be.redwood.the_redwood_project.activities;
+package be.redwood.the_redwood_project.fragments;
 
-import android.content.Context;
-import android.graphics.Movie;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Spinner;
+import android.view.ViewGroup;
 
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseRelation;
-import com.parse.ParseUser;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import be.redwood.the_redwood_project.R;
+import be.redwood.the_redwood_project.adapters.BlogAdapter;
 import be.redwood.the_redwood_project.models.Blog;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import timber.log.Timber;
 
-public class OverviewBlogsActivity extends AppCompatActivity {
+public class OverviewBlogsFragment extends Fragment {
     public static final String BASE_URL = "http://172.30.68.16:3000";
     private static final String TAG = "MyActivity";
     private List<Blog> blogList;
@@ -39,20 +27,21 @@ public class OverviewBlogsActivity extends AppCompatActivity {
     LinearLayoutManager llm;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.overview_blogs);
-        DrawerFragmentFactory.createDrawerFragment(getSupportFragmentManager());
-        getSupportActionBar().setTitle("The Redwood Project");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.overview_blogs, container, false);
 
-        recList = (RecyclerView) findViewById(R.id.blogList);
+        recList = (RecyclerView) v.findViewById(R.id.blogList);
         recList.setHasFixedSize(true);
-        llm = new LinearLayoutManager(this);
+        llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
         blogList = new ArrayList<>();
         fillBlogListAndSetBlogAdapter();
+
+        return v;
+
     }
 
     public List<Blog> getBlogList() {
@@ -76,7 +65,7 @@ public class OverviewBlogsActivity extends AppCompatActivity {
                         blogList.add(b);
                     }
                 }
-                BlogAdapter ca = new BlogAdapter(blogList, OverviewBlogsActivity.this);
+                BlogAdapter ca = new BlogAdapter(blogList, getContext());
                 recList.setAdapter(ca);
                 recList.setLayoutManager(llm);
             }
