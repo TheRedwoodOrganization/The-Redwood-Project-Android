@@ -24,27 +24,27 @@
             android:text="The redwood project">
 
             <Button
+                android:id="@+id/register_or_detail_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/login_button"
                 android:textSize="12sp"
                 android:background="@null"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/white"
-                android:text="Login button"
+                android:textColor="@color/gray"
+                android:text="Register"
                 android:layout_gravity="right"/>
 
             <Button
+                android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/register_or_detail_page"
                 android:textSize="12sp"
                 android:background="@null"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/white"
-                android:text="Registration button"
+                android:textColor="@color/gray"
+                android:text="Login"
                 android:layout_gravity="right"/>
 
         </android.support.v7.widget.Toolbar>

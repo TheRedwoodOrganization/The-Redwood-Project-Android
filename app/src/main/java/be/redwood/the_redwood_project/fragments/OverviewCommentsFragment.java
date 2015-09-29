@@ -24,15 +24,15 @@ import be.redwood.the_redwood_project.adapters.CommentAdapter;
 import be.redwood.the_redwood_project.models.Comment;
 
 public class OverviewCommentsFragment extends Fragment {
-    public static final String BASE_URL = "http://172.30.68.16:3000";
+    private static final String BASE_URL = "http://172.30.68.16:3000";
     private static final String TAG = "MyActivity";
     private List<Comment> commentList;
     private String postTitle;
     private TextView title;
     private TextView authorAndDate;
     private TextView postBody;
-    RecyclerView recList;
-    LinearLayoutManager llm;
+    private RecyclerView recList;
+    private LinearLayoutManager llm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

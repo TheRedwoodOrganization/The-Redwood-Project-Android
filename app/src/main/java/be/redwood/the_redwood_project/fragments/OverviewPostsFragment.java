@@ -25,15 +25,15 @@ import be.redwood.the_redwood_project.adapters.PostAdapter;
 import be.redwood.the_redwood_project.models.Post;
 
 public class OverviewPostsFragment extends Fragment {
-    public static final String BASE_URL = "http://172.30.68.16:3000";
+    private static final String BASE_URL = "http://172.30.68.16:3000";
     private static final String TAG = "MyActivity";
     private List<Post> postList;
     private String blogTitle;
     private ImageView blogImage;
     private TextView title;
     private TextView author;
-    RecyclerView recList;
-    LinearLayoutManager llm;
+    private RecyclerView recList;
+    private LinearLayoutManager llm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
