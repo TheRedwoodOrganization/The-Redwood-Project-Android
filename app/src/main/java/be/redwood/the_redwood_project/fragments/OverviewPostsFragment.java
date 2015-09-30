@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +31,6 @@ public class OverviewPostsFragment extends Fragment {
     private List<Post> postList;
     private String blogTitle;
     private ImageView blogImage;
-    private TextView title;
-    private TextView author;
     private RecyclerView recList;
     private LinearLayoutManager llm;
 
@@ -40,16 +39,20 @@ public class OverviewPostsFragment extends Fragment {
         //Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.overview_posts, container, false);
 
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            blogTitle = arguments.getString("blog_title");
+        }
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById (R.id.my_toolbar);
+        toolbar.setTitle(blogTitle);
+
         recList = (RecyclerView) v.findViewById(R.id.postList);
         recList.setHasFixedSize(true);
         llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            blogTitle = arguments.getString("blog_title");
-        }
         showBlogInformationOnScreen(v);
 
         postList = new ArrayList<>();
@@ -60,8 +63,6 @@ public class OverviewPostsFragment extends Fragment {
 
     public void showBlogInformationOnScreen(View v) {
         final View x = v;
-        title = (TextView) x.findViewById(R.id.title);
-        title.setText(blogTitle);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Blog");
         query.include("user"); // includes the pointer to get the user information
@@ -70,11 +71,6 @@ public class OverviewPostsFragment extends Fragment {
             public void done(ParseObject blog, com.parse.ParseException e) {
                 if (blog != null) {
                     String image = blog.getString("image");
-                    ParseObject user = (ParseObject) blog.get("user");
-                    String userName = user.getString("username");
-
-                    author = (TextView) x.findViewById(R.id.author);
-                    author.setText("by: " + userName);
                     blogImage = (ImageView) x.findViewById(R.id.image_post);
                     Picasso.with(getActivity()).load(image).into(blogImage);
                 }

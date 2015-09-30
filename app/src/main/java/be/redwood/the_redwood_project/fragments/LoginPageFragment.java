@@ -47,11 +47,6 @@ public class LoginPageFragment extends Fragment implements View.OnClickListener 
 
     }
 
-    public static LoginPageFragment newInstance(int page, String title) {
-        LoginPageFragment fragment = new LoginPageFragment();
-        return fragment;
-    }
-
     @Override
     public void onClick(View v) {
         View x = getView();
@@ -93,6 +88,7 @@ public class LoginPageFragment extends Fragment implements View.OnClickListener 
                     pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
                     editor = pref.edit();
                     editor.putBoolean("isLoggedIn", true);
+                    editor.putString("userName", username);
                     editor.commit();
 
                     // Change the buttons in the toolbar
@@ -104,7 +100,7 @@ public class LoginPageFragment extends Fragment implements View.OnClickListener 
                     // Show message 'congratulations, you're logged in'
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setTitle("Login succeeded");
-                    builder.setMessage("Congratulations! You're now logged in.");
+                    builder.setMessage("Congratulations! You're logged in.");
                     builder.setCancelable(true);
                     final AlertDialog dlg = builder.create();
                     dlg.show();
@@ -114,7 +110,7 @@ public class LoginPageFragment extends Fragment implements View.OnClickListener 
                             dlg.dismiss(); // when the task active then close the dialog
                             t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
                         }
-                    }, 5000);
+                    }, 4000);
 
                 } else {
                     faultMessage.setVisibility(View.VISIBLE);

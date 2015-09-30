@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
         editor.putBoolean("isLoggedIn", false);
+        editor.putString("userName", null);
         editor.commit();
 
         // buttons in drawer
@@ -58,10 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         createComment.setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) this.findViewById (R.id.my_toolbar);
-        toolbar.setTitle("Redwood project");
+        toolbar.setTitle("");
         toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setSubtitle("");
-        toolbar.setSubtitleTextColor(Color.WHITE);
 //        toolbar.setNavigationIcon(R.drawable.image);
 //        toolbar.inflateMenu(R.menu.toolbar_menu);
 //        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -94,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Toolbar toolbar = (Toolbar) findViewById (R.id.my_toolbar);
+        toolbar.setTitle("");
         Fragment fragment = new LoginPageFragment();
 
         Boolean loggedIn = pref.getBoolean("isLoggedIn", false);
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     dlg.dismiss(); // when the task active then close the dialog
                     t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
                 }
-            }, 5000);
+            }, 4000);
         } else if ((v == registerOrShowDetailPageUser) && (loggedIn)) {
             fragment = new DetailPageUserFragment();
         } else if ((v == registerOrShowDetailPageUser) && !(loggedIn)) {

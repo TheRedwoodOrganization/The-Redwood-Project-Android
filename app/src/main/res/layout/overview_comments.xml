@@ -1,44 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:weightSum="100">
 
-    <RelativeLayout
+    <LinearLayout
+        android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/green">
+        android:orientation="vertical"
+        android:layout_weight="80" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
 
         <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textSize="20dp"
-            android:text="name of the post"
-            android:background="@color/green"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="15dp"/>
-
-        <TextView
-            android:id="@+id/author_and_date"
-            android:layout_width="match_parent"
+            android:id="@+id/body_of_the_post"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="38dp"
-            android:textSize="10dp"
-            android:textStyle="italic"
-            android:text="This is the author and the date"
-            android:gravity="center_horizontal"/>
+            android:layout_marginBottom="5dp"/>
 
-    </RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/commentList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/body_of_the_post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/commentList"
+    <LinearLayout
+        android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_weight="20"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:background="@color/black">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="78"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@color/gray">
+
+            <EditText
+                android:id="@+id/new_comment_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="12sp"
+                android:layout_margin="5dp"
+                android:hint="Write your comment here" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="22"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@color/gray">
+
+            <Button
+                android:id="@+id/send_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="post"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
