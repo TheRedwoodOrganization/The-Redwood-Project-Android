@@ -71,7 +71,7 @@ public class CreateBlogFragment extends Fragment implements View.OnClickListener
                         blog.saveInBackground();
 
                         // show the blog overview page from the user
-                        Fragment fragment = new BlogsUserFragment();
+                        Fragment fragment = new DetailPageBlogFromUserFragment();
                         Bundle arguments = new Bundle();
                         arguments.putString("blog_title", title);
                         fragment.setArguments(arguments);
@@ -81,13 +81,6 @@ public class CreateBlogFragment extends Fragment implements View.OnClickListener
                     }
                 }
             });
-
-
-
-
-
-
-
 
         }
     }

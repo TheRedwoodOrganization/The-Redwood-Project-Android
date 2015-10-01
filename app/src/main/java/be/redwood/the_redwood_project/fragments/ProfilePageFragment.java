@@ -20,12 +20,12 @@ import be.redwood.the_redwood_project.R;
 
 public class ProfilePageFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
-    ImageView userImage;
-    TextView username;
-    TextView mailAddress;
-    Boolean hasBlog;
-    Button manageBlog;
+    private ParseObject userInformation;
+    private ImageView userImage;
+    private TextView username;
+    private TextView mailAddress;
+    private Boolean hasBlog;
+    private Button manageBlog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class ProfilePageFragment extends Fragment implements View.OnClickListene
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             public void done(ParseObject user, com.parse.ParseException e) {
                 if (user != null) {
+                    userInformation = user;
                     String mail = user.getString("email");
                     mailAddress.setText(mail);
                     String imagePath = user.getString("profilePic");
@@ -76,13 +77,35 @@ public class ProfilePageFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        Fragment fragment;
         if (hasBlog) {
+            // find the blog from the user
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Blog");
+            query.whereEqualTo("user", userInformation);
+            query.getFirstInBackground(new GetCallback<ParseObject>() {
+                public void done(ParseObject blog, com.parse.ParseException e) {
+                    if (blog != null) {
+                        String title = blog.getString("blogTitle");
+
+                        // show the blog overview page from the user
+                        Fragment fragment = new DetailPageBlogFromUserFragment();
+                        Bundle arguments = new Bundle();
+                        arguments.putString("blog_title", title);
+                        fragment.setArguments(arguments);
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.place_for_the_real_page, fragment);
+                        fragmentTransaction.commit();
+                    }
+                }
+            });
+
 
         } else {
-            Fragment fragment = new CreateBlogFragment();
+            fragment = new CreateBlogFragment();
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.place_for_the_real_page, fragment);
             fragmentTransaction.commit();
         }
+
     }
 }

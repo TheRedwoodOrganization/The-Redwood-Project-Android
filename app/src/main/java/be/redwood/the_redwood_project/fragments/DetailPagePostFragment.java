@@ -50,7 +50,7 @@ public class DetailPagePostFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.overview_comments, container, false);
+        View v = inflater.inflate(R.layout.detailpage_post, container, false);
 
         Bundle arguments = getArguments();
         if (arguments != null) {
@@ -134,10 +134,9 @@ public class DetailPagePostFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        View x = getView();
+        final View x = getView();
         // search if the user is logged in or not
         pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
-        editor = pref.edit();
         Boolean loggedIn = pref.getBoolean("isLoggedIn", false);
         String username = pref.getString("userName", null);
 
@@ -167,6 +166,21 @@ public class DetailPagePostFragment extends Fragment implements View.OnClickList
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.place_for_the_real_page, fragment);
                         fragmentTransaction.commit();
+
+                        // give a succeed message
+                        AlertDialog.Builder builder = new AlertDialog.Builder(x.getContext());
+                        builder.setTitle("Succeeded");
+                        builder.setMessage("Your comment is added to the list");
+                        builder.setCancelable(true);
+                        final AlertDialog dlg = builder.create();
+                        dlg.show();
+                        final Timer t = new Timer();
+                        t.schedule(new TimerTask() {
+                            public void run() {
+                                dlg.dismiss(); // when the task active then close the dialog
+                                t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+                            }
+                        }, 5000);
                     }
                 }
             });
