@@ -76,6 +76,6 @@
         android:textColor="@color/red"
         android:text="@string/fault_message_create_blog"
         android:layout_marginLeft="30dp"
-        android:visibility="invisible" />
+        android:visibility="invisible"/>
 
 </LinearLayout>
