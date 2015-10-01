@@ -111,4 +111,13 @@
             android:layout_marginTop="20dp"
             android:text="Register"/>
 
+    <TextView
+        android:id="@+id/fault_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:text="@string/fault_message_registration"
+        android:layout_marginLeft="30dp"
+        android:visibility="invisible" />
+
     </LinearLayout>

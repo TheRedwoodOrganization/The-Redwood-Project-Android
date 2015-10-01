@@ -41,7 +41,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ContactV
     public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
-                inflate(R.layout.comment_layout, viewGroup, false);
+                inflate(R.layout.comment_in_listview_layout, viewGroup, false);
         return new ContactViewHolder(itemView);
     }
 

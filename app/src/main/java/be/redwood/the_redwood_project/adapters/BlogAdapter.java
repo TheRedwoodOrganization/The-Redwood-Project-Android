@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import be.redwood.the_redwood_project.R;
-import be.redwood.the_redwood_project.fragments.OverviewPostsFragment;
+import be.redwood.the_redwood_project.fragments.DetailPageBlogFragment;
 import be.redwood.the_redwood_project.models.Blog;
 
 public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ContactViewHolder> {
@@ -51,7 +51,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ContactViewHol
     public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
-                inflate(R.layout.blog_layout, viewGroup, false);
+                inflate(R.layout.blog_in_listview_layout, viewGroup, false);
 
         return new ContactViewHolder(itemView);
     }
@@ -73,7 +73,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ContactViewHol
         @Override
         public void onClick(View v) {
             try{
-                Fragment fragment = new OverviewPostsFragment();
+                Fragment fragment = new DetailPageBlogFragment();
                 Bundle arguments = new Bundle();
                 Blog blog = blogList.get(this.getLayoutPosition());
                 arguments.putString("blog_title", blog.getTitle());

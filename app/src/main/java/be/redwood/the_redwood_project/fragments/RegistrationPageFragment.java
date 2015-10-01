@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -26,6 +24,7 @@ import be.redwood.the_redwood_project.R;
 public class RegistrationPageFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
+    private TextView faultMessage;
     private String emailUser;
     private String userNameUser;
     private String passwordUser;
@@ -37,6 +36,7 @@ public class RegistrationPageFragment extends Fragment implements View.OnClickLi
         //Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.registration_page, container, false);
 
+        faultMessage = (TextView) v.findViewById(R.id.fault_message);
         register = (Button) v.findViewById(R.id.register_user);
         register.setOnClickListener(this);
 
@@ -58,21 +58,9 @@ public class RegistrationPageFragment extends Fragment implements View.OnClickLi
         imageUser = imageU.getText().toString();
 
         if ((emailUser.equals("")) || (userNameUser.equals("")) || (passwordUser.equals("")) || (imageUser.equals(""))) {
-            // Show message 'all fields must be filled in'
-            AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-            builder.setTitle("Registration failed");
-            builder.setMessage("Please fill in all fields.");
-            builder.setCancelable(true);
-            final AlertDialog dlg = builder.create();
-            dlg.show();
-            final Timer t = new Timer();
-            t.schedule(new TimerTask() {
-                public void run() {
-                    dlg.dismiss(); // when the task active then close the dialog
-                    t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
-                }
-            }, 4000);
+            faultMessage.setVisibility(View.VISIBLE);
         } else {
+            faultMessage.setVisibility(View.INVISIBLE);
             ParseUser newUser = new ParseUser();
             newUser.setUsername(userNameUser);
             newUser.setPassword(passwordUser);
@@ -99,7 +87,7 @@ public class RegistrationPageFragment extends Fragment implements View.OnClickLi
                         button2.setText("Logout");
 
                         // open detailpage user
-                        Fragment fragment = new DetailPageUserFragment();
+                        Fragment fragment = new ProfilePageFragment();
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.place_for_the_real_page, fragment);
                         fragmentTransaction.commit();
@@ -117,7 +105,7 @@ public class RegistrationPageFragment extends Fragment implements View.OnClickLi
                                 dlg.dismiss(); // when the task active then close the dialog
                                 t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
                             }
-                        }, 4000);
+                        }, 5000);
                     }
                 }
             });

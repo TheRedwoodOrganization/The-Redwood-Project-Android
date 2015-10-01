@@ -16,12 +16,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import be.redwood.the_redwood_project.R;
-import be.redwood.the_redwood_project.fragments.DetailPageUserFragment;
+import be.redwood.the_redwood_project.fragments.ProfilePageFragment;
 import be.redwood.the_redwood_project.fragments.LoginPageFragment;
-import be.redwood.the_redwood_project.fragments.MakeNewBlogFragment;
-import be.redwood.the_redwood_project.fragments.MakeNewCommentFragment;
-import be.redwood.the_redwood_project.fragments.MakeNewPostFragment;
-import be.redwood.the_redwood_project.fragments.OverviewBlogsFragment;
+import be.redwood.the_redwood_project.fragments.ListBlogsFragment;
 import be.redwood.the_redwood_project.fragments.RegistrationPageFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -29,9 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private Button openOverviewBlogs;
-    private Button createBlog;
-    private Button createPost;
-    private Button createComment;
     private Button loginOrLogout;
     private Button registerOrShowDetailPageUser;
 
@@ -51,12 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // buttons in drawer
         openOverviewBlogs = (Button) this.findViewById(R.id.show_overview_blogs);
         openOverviewBlogs.setOnClickListener(this);
-        createBlog = (Button) this.findViewById(R.id.create_blog);
-        createBlog.setOnClickListener(this);
-        createPost = (Button) this.findViewById(R.id.create_post);
-        createPost.setOnClickListener(this);
-        createComment = (Button) this.findViewById(R.id.create_comment);
-        createComment.setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) this.findViewById (R.id.my_toolbar);
         toolbar.setTitle("");
@@ -122,23 +110,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     dlg.dismiss(); // when the task active then close the dialog
                     t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
                 }
-            }, 4000);
+            }, 5000);
         } else if ((v == registerOrShowDetailPageUser) && (loggedIn)) {
-            fragment = new DetailPageUserFragment();
+            fragment = new ProfilePageFragment();
         } else if ((v == registerOrShowDetailPageUser) && !(loggedIn)) {
             fragment = new RegistrationPageFragment();
         } else if (v == openOverviewBlogs) {
             myDrawerLayout.closeDrawers();
-            fragment = new OverviewBlogsFragment();
-        } else if (v == createBlog) {
-            myDrawerLayout.closeDrawers();
-            fragment = new MakeNewBlogFragment();
-        } else if (v == createPost) {
-            myDrawerLayout.closeDrawers();
-            fragment = new MakeNewPostFragment();
-        } else if (v == createComment) {
-            myDrawerLayout.closeDrawers();
-            fragment = new MakeNewCommentFragment();
+            fragment = new ListBlogsFragment();
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

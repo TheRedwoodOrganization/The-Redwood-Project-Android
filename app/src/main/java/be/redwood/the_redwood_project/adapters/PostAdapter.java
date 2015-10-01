@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import be.redwood.the_redwood_project.R;
-import be.redwood.the_redwood_project.fragments.OverviewCommentsFragment;
+import be.redwood.the_redwood_project.fragments.DetailPagePostFragment;
 import be.redwood.the_redwood_project.models.Post;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ContactViewHolder> {
@@ -47,7 +47,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ContactViewHol
     public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
-                inflate(R.layout.post_layout, viewGroup, false);
+                inflate(R.layout.post_in_listview_layout, viewGroup, false);
 
         return new ContactViewHolder(itemView);
     }
@@ -66,7 +66,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ContactViewHol
         @Override
         public void onClick(View v) {
             try{
-                Fragment fragment = new OverviewCommentsFragment();
+                Fragment fragment = new DetailPagePostFragment();
                 Bundle arguments = new Bundle();
                 Post post = postList.get(this.getLayoutPosition());
                 arguments.putString("post_title", post.getTitle());

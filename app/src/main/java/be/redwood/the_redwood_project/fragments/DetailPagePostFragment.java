@@ -19,13 +19,10 @@ import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
-import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,9 +32,8 @@ import java.util.TimerTask;
 import be.redwood.the_redwood_project.R;
 import be.redwood.the_redwood_project.adapters.CommentAdapter;
 import be.redwood.the_redwood_project.models.Comment;
-import be.redwood.the_redwood_project.models.Post;
 
-public class OverviewCommentsFragment extends Fragment implements View.OnClickListener {
+public class DetailPagePostFragment extends Fragment implements View.OnClickListener {
     private static final String BASE_URL = "http://172.30.68.16:3000";
     private static final String TAG = "MyActivity";
     private List<Comment> commentList;
@@ -164,7 +160,7 @@ public class OverviewCommentsFragment extends Fragment implements View.OnClickLi
                         newComment.saveInBackground();
 
                         // refresh the page
-                        Fragment fragment = new OverviewCommentsFragment();
+                        Fragment fragment = new DetailPagePostFragment();
                         Bundle arguments = new Bundle();
                         arguments.putString("post_title", postTitle);
                         fragment.setArguments(arguments);

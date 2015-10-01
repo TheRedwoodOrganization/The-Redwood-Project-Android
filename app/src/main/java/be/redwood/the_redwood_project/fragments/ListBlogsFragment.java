@@ -19,7 +19,7 @@ import be.redwood.the_redwood_project.R;
 import be.redwood.the_redwood_project.adapters.BlogAdapter;
 import be.redwood.the_redwood_project.models.Blog;
 
-public class OverviewBlogsFragment extends Fragment {
+public class ListBlogsFragment extends Fragment {
     private static final String BASE_URL = "http://172.30.68.16:3000";
     private static final String TAG = "MyActivity";
     private List<Blog> blogList;

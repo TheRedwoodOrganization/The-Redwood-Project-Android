@@ -2,5 +2,7 @@
     <string name="app_name">The_Redwood_Project</string>
     <string name="action_settings">Settings</string>
     <string name="fault_message_login">The username and the password don\'t match</string>
+    <string name="fault_message_registration">Please fill in all the fields</string>
+    <string name="fault_message_create_blog">Please fill in all the fields</string>
     <string name="fault_message_list_blogs">There are no blogs at the moment</string>
 </resources>

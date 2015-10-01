@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:textSize="20dp"
-        android:text="CREATE A BLOG"
+        android:text="CREATE YOUR BLOG"
         android:background="@color/green"
         android:gravity="center"/>
 
@@ -26,6 +26,7 @@
             android:text="Title:" />
 
         <EditText
+            android:id="@+id/title_blog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -36,12 +37,45 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Image:" />
+
+        <EditText
+            android:id="@+id/image_blog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:color="@color/silver"
+            android:hint="Upload your image"
+            android:textColorHighlight="@color/green"
+            android:textSize="12dp"/>
+
+    </LinearLayout>
+
     <Button
+        android:id="@+id/publish_blog"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
         android:text="Publish"/>
+
+    <TextView
+        android:id="@+id/fault_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:text="@string/fault_message_create_blog"
+        android:layout_marginLeft="30dp"
+        android:visibility="invisible" />
 
 </LinearLayout>
