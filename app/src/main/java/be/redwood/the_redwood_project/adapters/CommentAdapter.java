@@ -2,7 +2,12 @@ package be.redwood.the_redwood_project.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +15,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import be.redwood.the_redwood_project.R;
+import be.redwood.the_redwood_project.fragments.CreatePostFragment;
 import be.redwood.the_redwood_project.models.Comment;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ContactViewHolder>{
@@ -77,11 +90,19 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ContactV
 
         @Override
         public void onClick(View v) {
-            if (v == vEditIcon) {
-
-            } else if (v == vDeleteIcon) {
-
-            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Under construction");
+            builder.setMessage("This is under construction");
+            builder.setCancelable(true);
+            final AlertDialog dlg = builder.create();
+            dlg.show();
+            final Timer t = new Timer();
+            t.schedule(new TimerTask() {
+                public void run() {
+                    dlg.dismiss(); // when the task active then close the dialog
+                    t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+                }
+            }, 5000);
         }
     }
 }

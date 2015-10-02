@@ -129,16 +129,6 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                                                         newPost.put("user", userInfo);
                                                         newPost.saveInBackground();
 
-                                                        // go to the blogpage of the user
-                                                        String blogTitle = blog.getString("blogTitle");
-                                                        Fragment fragment = new DetailPageBlogFromUserFragment();
-                                                        Bundle arguments = new Bundle();
-                                                        arguments.putString("blog_title", blogTitle);
-                                                        fragment.setArguments(arguments);
-                                                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                                        fragmentTransaction.replace(R.id.place_for_the_real_page, fragment);
-                                                        fragmentTransaction.commit();
-
                                                         // give a succeed message
                                                         AlertDialog.Builder builder = new AlertDialog.Builder(x.getContext());
                                                         builder.setTitle("Succeeded");
@@ -153,6 +143,16 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                                                                 t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
                                                             }
                                                         }, 5000);
+
+                                                        // go to the blogpage of the user
+                                                        String blogTitle = blog.getString("blogTitle");
+                                                        Fragment fragment = new DetailPageBlogFromUserFragment();
+                                                        Bundle arguments = new Bundle();
+                                                        arguments.putString("blog_title", blogTitle);
+                                                        fragment.setArguments(arguments);
+                                                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                                        fragmentTransaction.replace(R.id.place_for_the_real_page, fragment);
+                                                        fragmentTransaction.commit();
                                                     }
                                                 }
                                             });
