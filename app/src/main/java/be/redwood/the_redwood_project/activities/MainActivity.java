@@ -25,13 +25,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import be.redwood.the_redwood_project.R;
-import be.redwood.the_redwood_project.fragments.DetailPageUserFragment;
+import be.redwood.the_redwood_project.fragments.CreateBlogFragment;
+import be.redwood.the_redwood_project.fragments.DetailPageBlogFromUserFragment;
+import be.redwood.the_redwood_project.fragments.ProfilePageFragment;
 import be.redwood.the_redwood_project.fragments.LoginPageFragment;
-import be.redwood.the_redwood_project.fragments.MakeNewBlogFragment;
-import be.redwood.the_redwood_project.fragments.MakeNewCommentFragment;
-import be.redwood.the_redwood_project.fragments.MakeNewPostFragment;
-import be.redwood.the_redwood_project.fragments.OverviewBlogsFragment;
-import be.redwood.the_redwood_project.fragments.OverviewCommentsFragment;
+import be.redwood.the_redwood_project.fragments.ListBlogsFragment;
 import be.redwood.the_redwood_project.fragments.RegistrationPageFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -42,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayAdapter<String> mAdapter;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
+    private Button openOverviewBlogs;
+    private Button createBlog;
+    private Button createPost;
+    private Button createComment;
     private Button loginOrLogout;
     private Button registerOrShowDetailPageUser;
 
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
         editor.putBoolean("isLoggedIn", false);
+        editor.putString("userName", null);
         editor.commit();
 
         // buttons in drawer
@@ -102,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Toolbar toolbar = (Toolbar) findViewById (R.id.my_toolbar);
+        toolbar.setTitle("");
         Fragment fragment = new LoginPageFragment();
 
         Boolean loggedIn = pref.getBoolean("isLoggedIn", false);
@@ -131,9 +136,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }, 5000);
         } else if ((v == registerOrShowDetailPageUser) && (loggedIn)) {
-            fragment = new DetailPageUserFragment();
+            fragment = new ProfilePageFragment();
         } else if ((v == registerOrShowDetailPageUser) && !(loggedIn)) {
             fragment = new RegistrationPageFragment();
+        } else if (v == openOverviewBlogs) {
+            myDrawerLayout.closeDrawers();
+            fragment = new ListBlogsFragment();
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -217,13 +225,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (position) {
             case 0: // Fragment # 0 - This will show FragmentOne
-                return new OverviewBlogsFragment();
+                return new ListBlogsFragment();
             case 1:
-                return new MakeNewBlogFragment();
+                return new CreateBlogFragment();
             case 2:
-                return new OverviewCommentsFragment();
-//            case 3://TODO: implement Frag4
-//                return ProfilepageFragment();
+                return new DetailPageBlogFromUserFragment();
+            case 3://TODO: implement Frag4
+                return new ProfilePageFragment();
             default:
                 return null;
         }
