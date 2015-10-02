@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:textSize="20dp"
-        android:text="CREATE YOUR BLOG"
+        android:text="CREATE A POST"
         android:background="@color/green"
         android:gravity="center"/>
 
@@ -26,7 +26,7 @@
             android:text="Title:" />
 
         <EditText
-            android:id="@+id/title_blog"
+            android:id="@+id/title_post"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -39,29 +39,29 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="150dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="Image:" />
+            android:layout_marginTop="20dp"
+            android:text="Content:" />
 
         <EditText
-            android:id="@+id/image_blog"
+            android:id="@+id/content_post"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:color="@color/silver"
-            android:hint="upload your image"
+            android:gravity="center"
+            android:hint="write down your thoughts"
             android:textColorHighlight="@color/green"
             android:textSize="12dp"/>
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/publish_blog"
+        android:id="@+id/publish_post"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="30dp"
@@ -74,7 +74,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/red"
-        android:text="@string/fault_message_create_blog"
+        android:text="@string/fault_message_create_post"
+
         android:layout_marginLeft="30dp"
         android:visibility="invisible"/>
 

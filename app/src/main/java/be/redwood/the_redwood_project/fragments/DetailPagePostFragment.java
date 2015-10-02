@@ -72,7 +72,7 @@ public class DetailPagePostFragment extends Fragment implements View.OnClickList
         showPostInformationOnScreen(v);
 
         commentList = new ArrayList<>();
-        fillCommentListAndSetCommentAdapter();
+        fillCommentListAndSetCommentAdapter(v);
 
         return v;
 
@@ -102,7 +102,8 @@ public class DetailPagePostFragment extends Fragment implements View.OnClickList
         return commentList;
     }
 
-    public void fillCommentListAndSetCommentAdapter() {
+    public void fillCommentListAndSetCommentAdapter(View v) {
+        final View x = v;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Comment");
         query.include("user"); // includes the pointer to get the user information
         query.include("blogPost"); // includes the pointer to get the user information
@@ -123,9 +124,16 @@ public class DetailPagePostFragment extends Fragment implements View.OnClickList
                             commentList.add(b);
                         }
                     }
+
+                    // als er geen posts zijn, plaats deze boodschap
+                    TextView message1 = (TextView) x.findViewById(R.id.message_1);
+                    TextView message2 = (TextView) x.findViewById(R.id.message_2);
+                    if (commentList.size() == 0) {
+                        message1.setVisibility(View.VISIBLE);
+                        message2.setVisibility(View.VISIBLE);
+                    }
                 }
                 CommentAdapter ca = new CommentAdapter(commentList, getContext());
-                Log.w("TEST", "commentlist " + commentList.size());
                 recList.setAdapter(ca);
                 recList.setLayoutManager(llm);
             }

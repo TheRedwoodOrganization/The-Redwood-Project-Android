@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.squareup.picasso.Picasso;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import be.redwood.the_redwood_project.R;
 
@@ -32,13 +36,37 @@ public class ProfilePageFragment extends Fragment implements View.OnClickListene
         //Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.profile_page, container, false);
 
-        userImage = (ImageView) v.findViewById(R.id.image_user);
-        username = (TextView) v.findViewById(R.id.username_user);
-        mailAddress = (TextView) v.findViewById(R.id.mail_address_user);
-        manageBlog = (Button) v.findViewById(R.id.manage_blog);
-        manageBlog.setOnClickListener(this);
+        pref = getContext().getSharedPreferences("MyPref", 0);
+        Boolean loggedIn = pref.getBoolean("isLoggedIn", false);
 
-        showUserInformationOnScreen(v);
+        if (loggedIn) {
+            userImage = (ImageView) v.findViewById(R.id.image_user);
+            username = (TextView) v.findViewById(R.id.username_user);
+            mailAddress = (TextView) v.findViewById(R.id.mail_address_user);
+            manageBlog = (Button) v.findViewById(R.id.manage_blog);
+            manageBlog.setOnClickListener(this);
+            showUserInformationOnScreen(v);
+        } else {
+            // Go to the login page
+            Fragment fragment = new LoginPageFragment();
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.place_for_the_real_page, fragment);
+            fragmentTransaction.commit();
+            // show message to user
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Please login");
+            builder.setMessage("You have to log in to see your profile");
+            builder.setCancelable(true);
+            final AlertDialog dlg = builder.create();
+            dlg.show();
+            final Timer t = new Timer();
+            t.schedule(new TimerTask() {
+                public void run() {
+                    dlg.dismiss(); // when the task active then close the dialog
+                    t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+                }
+            }, 5000);
+        }
 
         return v;
     }

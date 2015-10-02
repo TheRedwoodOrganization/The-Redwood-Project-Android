@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -55,7 +56,7 @@ public class DetailPageBlogFragment extends Fragment {
         showBlogInformationOnScreen(v);
 
         postList = new ArrayList<>();
-        fillPostListAndSetPostAdapter();
+        fillPostListAndSetPostAdapter(v);
 
         return v;
     }
@@ -81,7 +82,8 @@ public class DetailPageBlogFragment extends Fragment {
         return postList;
     }
 
-    public void fillPostListAndSetPostAdapter() {
+    public void fillPostListAndSetPostAdapter(View v) {
+        final View x = v;
 
         // search for blogPosts, include "blog", waar ParseObject blog.getString("title") = ...
         // info nodig: createdAt (Date), postTitle
@@ -96,18 +98,25 @@ public class DetailPageBlogFragment extends Fragment {
                         Date date = blogPost.getCreatedAt();
 
                         ParseObject blog = (ParseObject) blogPost.get("blog");
-                        String title = blog.getString("blogTitle");
 
+                        String title = blog.getString("blogTitle");
                         if (title.equals(blogTitle)) {
                             Post p = new Post(postTitle, date);
                             postList.add(p);
                         }
 
                     }
+
+                    // als er geen posts zijn, plaats deze boodschap
+                    TextView message1 = (TextView) x.findViewById(R.id.message_1);
+                    if (postList.size() == 0) {
+                        message1.setVisibility(View.VISIBLE);
+                    }
                 }
                 PostAdapter pa = new PostAdapter(postList, getContext());
                 recList.setAdapter(pa);
                 recList.setLayoutManager(llm);
+
             }
         });
     }

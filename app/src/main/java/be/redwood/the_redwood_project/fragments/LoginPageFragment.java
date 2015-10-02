@@ -19,6 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import be.redwood.the_redwood_project.R;
+import be.redwood.the_redwood_project.activities.MainActivity;
 
 public class LoginPageFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences pref;

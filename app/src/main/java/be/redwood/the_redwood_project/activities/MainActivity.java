@@ -26,6 +26,7 @@ import java.util.TimerTask;
 
 import be.redwood.the_redwood_project.R;
 import be.redwood.the_redwood_project.fragments.CreateBlogFragment;
+import be.redwood.the_redwood_project.fragments.CreatePostFragment;
 import be.redwood.the_redwood_project.fragments.DetailPageBlogFromUserFragment;
 import be.redwood.the_redwood_project.fragments.ProfilePageFragment;
 import be.redwood.the_redwood_project.fragments.LoginPageFragment;
@@ -33,17 +34,12 @@ import be.redwood.the_redwood_project.fragments.ListBlogsFragment;
 import be.redwood.the_redwood_project.fragments.RegistrationPageFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private String mActivityTitle;
     private DrawerLayout myDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
-    private Button openOverviewBlogs;
-    private Button createBlog;
-    private Button createPost;
-    private Button createComment;
     private Button loginOrLogout;
     private Button registerOrShowDetailPageUser;
 
@@ -59,18 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putString("userName", null);
         editor.commit();
 
-        // buttons in drawer
-//        openOverviewBlogs = (Button) this.findViewById(R.id.show_overview_blogs);
-//        openOverviewBlogs.setOnClickListener(this);
-//        createBlog = (Button) this.findViewById(R.id.create_blog);
-//        createBlog.setOnClickListener(this);
-//        createPost = (Button) this.findViewById(R.id.create_post);
-//        createPost.setOnClickListener(this);
-//        createComment = (Button) this.findViewById(R.id.create_comment);
-//        createComment.setOnClickListener(this);
-
         Toolbar toolbar = (Toolbar) this.findViewById (R.id.my_toolbar);
-        toolbar.setTitle("Redwood project");
+        toolbar.setTitle("Redwood");
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setSubtitle("");
         toolbar.setSubtitleTextColor(Color.WHITE);
@@ -78,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDrawerList = (ListView)findViewById(R.id.navList);
 
         myDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mActivityTitle = getTitle().toString();
         setupDrawer();
         addDrawerItems();
 
@@ -106,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Toolbar toolbar = (Toolbar) findViewById (R.id.my_toolbar);
-        toolbar.setTitle("");
+        toolbar.setTitle("Redwood");
         Fragment fragment = new LoginPageFragment();
 
         Boolean loggedIn = pref.getBoolean("isLoggedIn", false);
@@ -139,9 +124,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fragment = new ProfilePageFragment();
         } else if ((v == registerOrShowDetailPageUser) && !(loggedIn)) {
             fragment = new RegistrationPageFragment();
-        } else if (v == openOverviewBlogs) {
-            myDrawerLayout.closeDrawers();
-            fragment = new ListBlogsFragment();
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -180,20 +162,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupDrawer() {
         mDrawerToggle = new ActionBarDrawerToggle(this, myDrawerLayout,
-
                 R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation!");
+                getSupportActionBar().setTitle("Navigation");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(mActivityTitle);
+                getSupportActionBar().setTitle("Redwood");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -202,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Blogs", "Create blog", "comment", "profile" };
+        String[] osArray = { "Overview Blogs", "Create Blog", "Create Post", "Profile page" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
 
@@ -229,8 +210,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 1:
                 return new CreateBlogFragment();
             case 2:
-                return new DetailPageBlogFromUserFragment();
-            case 3://TODO: implement Frag4
+                return new CreatePostFragment();
+            case 3:
                 return new ProfilePageFragment();
             default:
                 return null;

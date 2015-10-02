@@ -3,6 +3,8 @@ package be.redwood.the_redwood_project.fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,9 +44,7 @@ public class DetailPageBlogFromUserFragment extends Fragment implements View.OnC
     private ImageView blogImage;
     private RecyclerView recList;
     private LinearLayoutManager llm;
-    private String titlePost;
-    private String contentPost;
-    private Button publishPost;
+    private Button createNewPost;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,8 +59,8 @@ public class DetailPageBlogFromUserFragment extends Fragment implements View.OnC
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
         toolbar.setTitle(blogTitle);
 
-        publishPost = (Button) v.findViewById(R.id.send_post);
-        publishPost.setOnClickListener(this);
+        createNewPost = (Button) v.findViewById(R.id.make_new_post);
+        createNewPost.setOnClickListener(this);
 
         recList = (RecyclerView) v.findViewById(R.id.postList);
         recList.setHasFixedSize(true);
@@ -71,7 +71,7 @@ public class DetailPageBlogFromUserFragment extends Fragment implements View.OnC
         showBlogInformationOnScreen(v);
 
         postList = new ArrayList<>();
-        fillPostListAndSetPostAdapter();
+        fillPostListAndSetPostAdapter(v);
 
         return v;
     }
@@ -97,7 +97,8 @@ public class DetailPageBlogFromUserFragment extends Fragment implements View.OnC
         return postList;
     }
 
-    public void fillPostListAndSetPostAdapter() {
+    public void fillPostListAndSetPostAdapter(View v) {
+        final View x = v;
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("BlogPost");
         query.include("blog"); // includes the pointer to get the user information
@@ -117,6 +118,15 @@ public class DetailPageBlogFromUserFragment extends Fragment implements View.OnC
                         }
 
                     }
+
+                    // als er geen posts zijn, plaats deze boodschap
+                    TextView message1 = (TextView) x.findViewById(R.id.message_1);
+                    TextView message2 = (TextView) x.findViewById(R.id.message_2);
+                    if (postList.size() == 0) {
+                        message1.setVisibility(View.VISIBLE);
+                        message2.setVisibility(View.VISIBLE);
+                    }
+
                 }
                 PostAdapter pa = new PostAdapter(postList, getContext());
                 recList.setAdapter(pa);
@@ -127,70 +137,16 @@ public class DetailPageBlogFromUserFragment extends Fragment implements View.OnC
 
     @Override
     public void onClick(View v) {
-        final View x = getView();
+        Fragment fragment = new CreatePostFragment();
 
-        // get the values filled in by the user
-        EditText title = (EditText) x.findViewById(R.id.new_title_post);
-        titlePost = title.getText().toString();
-        EditText content = (EditText) x.findViewById(R.id.new_content_post);
-        contentPost = content.getText().toString();
+        Bundle arguments = new Bundle();
+        arguments.putString("blog_title", blogTitle);
+        fragment.setArguments(arguments);
 
-        // search for the user ParseObject
-        pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
-        String username = pref.getString("userName", null);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-        query.whereEqualTo("username", username);
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            public void done(final ParseObject userInfo, ParseException e) {
-                if (userInfo == null) {
-                    Log.d("user", "The getFirst request failed.");
-                } else {
-                    // search for the blog parseObject
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Blog");
-                    query.whereEqualTo("user", userInfo);
-                    query.getFirstInBackground(new GetCallback<ParseObject>() {
-                        public void done(ParseObject blog, ParseException e) {
-                            if (blog == null) {
-                                Log.d("blog", "The getFirst request failed.");
-                            } else {
-                                // save the new post in Parse
-                                ParseObject newPost = new ParseObject("BlogPost");
-                                newPost.put("postTitle", titlePost);
-                                newPost.put("postBody", contentPost);
-                                newPost.put("blog", blog);
-                                newPost.put("user", userInfo);
-                                newPost.saveInBackground();
-
-                                // refresh the page
-                                Fragment fragment = new DetailPageBlogFromUserFragment();
-                                Bundle arguments = new Bundle();
-                                arguments.putString("blog_title", blogTitle);
-                                fragment.setArguments(arguments);
-                                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                fragmentTransaction.replace(R.id.place_for_the_real_page, fragment);
-                                fragmentTransaction.commit();
-
-                                // give a succeed message
-                                AlertDialog.Builder builder = new AlertDialog.Builder(x.getContext());
-                                builder.setTitle("Succeeded");
-                                builder.setMessage("Your post is added to the list");
-                                builder.setCancelable(true);
-                                final AlertDialog dlg = builder.create();
-                                dlg.show();
-                                final Timer t = new Timer();
-                                t.schedule(new TimerTask() {
-                                    public void run() {
-                                        dlg.dismiss(); // when the task active then close the dialog
-                                        t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
-                                    }
-                                }, 5000);
-                            }
-                        }
-                    });
-
-                }
-            }
-        });
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.place_for_the_real_page, fragment);
+        fragmentTransaction.commit();
 
     }
 }

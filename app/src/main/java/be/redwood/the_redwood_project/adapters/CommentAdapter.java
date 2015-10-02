@@ -59,7 +59,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ContactV
         return new ContactViewHolder(itemView);
     }
 
-    public static class ContactViewHolder extends RecyclerView.ViewHolder {
+    public static class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         protected TextView vCommentText;
         protected TextView vOtherInformation;
         protected ImageView vEditIcon;
@@ -71,7 +71,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ContactV
             vOtherInformation = (TextView) v.findViewById(R.id.other_information);
             vEditIcon = (ImageView) v.findViewById(R.id.edit_icon);
             vDeleteIcon = (ImageView) v.findViewById(R.id.delete_icon);
+            vEditIcon.setOnClickListener(this);
+            vDeleteIcon.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            if (v == vEditIcon) {
+
+            } else if (v == vDeleteIcon) {
+
+            }
+        }
     }
 }
